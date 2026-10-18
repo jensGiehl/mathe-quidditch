@@ -1,0 +1,7 @@
+.git
+.tools
+target
+data
+artifacts
+node_modules
+.idea

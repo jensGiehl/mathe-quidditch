@@ -1,0 +1,24 @@
+Audioquellen / Audio credits
+
+cheer-1.wav bis cheer-5.wav:
+Free Crowd Cheering Sounds (2022) von / by Gregor Quendel
+Autor / Creator: https://www.gregorquendel.com/
+Quelle / Source: https://opengameart.org/content/free-crowd-cheering-sounds
+Originalarchiv / Original archive: https://opengameart.org/sites/default/files/gregor_quendel_-_free_crowd_cheering_sounds_-_mp3.zip
+Lizenz / License: Creative Commons Attribution 4.0 International (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/
+
+Bearbeitung / Changes: gekürzte Ausschnitte / cropped excerpts; Hochpass / high-pass filter,
+leichte Kompression / mild compression, Ein- und Ausblenden / fades, Pegelanpassung / gain adjustment,
+Konvertierung zu / converted to PCM16 WAV, stereo, 44.100 Hz. Die Dateien wurden bearbeitet.
+
+Verwendete Ausschnitte / Source excerpts:
+cheer-1.wav: Track 01 - Strong cheering and strong rhythmic cheering, 5.00-6.15 s
+cheer-2.wav: Track 02 - Strong cheering and soft rhythmic cheering, 4.80-5.95 s
+cheer-3.wav: Track 03 - Strong cheering - I, 7.20-8.35 s
+cheer-4.wav: Track 04 - Strong cheering - II - Short, 6.30-7.45 s
+cheer-5.wav: Track 08 - Rhythmic cheering, 7.70-8.85 s
+
+Aufbereitung / Preparation: scripts/prepare_cheers.py
+
+music.wav, crowd-ohh.wav, spell.wav: eigene synthetische Klänge / original synthesized audio,
+erzeugt mit / generated with scripts/generate_audio.py.
