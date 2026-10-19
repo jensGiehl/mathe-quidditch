@@ -1,4 +1,4 @@
-FROM eclipse-temurin:27-jdk AS build
+FROM --platform=$BUILDPLATFORM eclipse-temurin:27-jdk AS build
 WORKDIR /build
 COPY .mvn/ .mvn/
 COPY mvnw pom.xml ./

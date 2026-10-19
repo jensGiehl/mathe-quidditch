@@ -110,7 +110,23 @@ Highscores bleiben in `data/mathe-quidditch.mv.db` auch nach einem Neustart erha
 
 ## Docker
 
-Das Dockerfile baut die Anwendung mit JDK 27 und startet das JAR als Benutzer ohne Rootrechte. Docker muss lokal installiert sein.
+Das Dockerfile baut und testet die Anwendung mit JDK 27 auf der Architektur des Build-Rechners und startet das plattformunabhängige JAR als Benutzer ohne Rootrechte im passenden Laufzeit-Image. Docker muss lokal installiert sein.
+
+### Automatischer Build und Raspberry Pi
+
+Die [GitHub Action](.github/workflows/docker-image.yml) baut bei jedem Push auf `main` oder `master` ein Image für **`linux/amd64` und `linux/arm64`** und veröffentlicht beide Varianten gemeinsam in der GitHub Container Registry unter **`ghcr.io/jensgiehl/mathe-quidditch`**. Der Build führt mit `./mvnw verify` auch die Java-Tests aus. Zusätzlich lässt sich der Workflow im Reiter **Actions** auf einem dieser beiden Branches manuell starten. Die verwendeten Actions sind auf feste Commit-SHAs gesetzt.
+
+Verfügbare Tags nach erfolgreichem Build:
+
+- `latest`: zuletzt erfolgreich veröffentlichtes Image von `main` oder `master`.
+- `main` beziehungsweise `master`: letzter erfolgreicher Build des jeweiligen Branches.
+- `sha-<commit>`: Build eines bestimmten Commits, standardmäßig mit den ersten sieben Zeichen der Commit-ID.
+
+Docker wählt beim Pull automatisch die passende Architektur. Auf einem **Raspberry Pi wird ein 64-Bit-Betriebssystem benötigt**, beispielsweise Raspberry Pi OS Lite (64-bit). Ein 32-Bit-System (`linux/arm/v7`) wird von den verwendeten Java-27-Basisimages nicht unterstützt.
+
+Die Veröffentlichung verwendet das automatisch bereitgestellte `GITHUB_TOKEN` mit `packages: write`; zusätzliche Registry-Secrets sind nicht erforderlich. Ein neues GHCR-Paket ist zunächst privat. Für einen Pull ohne Anmeldung muss das Paket in den GitHub-Paketeinstellungen auf **Public** gestellt werden. Bei einem privaten Paket ist zuvor `docker login ghcr.io -u jensGiehl` mit einem klassischen Personal Access Token mit `read:packages` als Kennwort nötig. Siehe [GitHub-Dokumentation zur Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).
+
+### Image bauen und starten
 
 Eigenes Image bauen und starten:
 
@@ -123,10 +139,10 @@ docker run -d \
   mathe-quidditch:local
 ```
 
-Beispiel für ein **bereits veröffentlichtes Image**; `ghcr.io/dein-name/mathe-quidditch:latest` ist ein **anzupassender Registry-Platzhalter**. Dieses Repository veröffentlicht selbst kein Image.
+Veröffentlichtes Image starten oder nach einem erfolgreichen Workflow-Lauf aktualisieren, auch auf dem Raspberry Pi:
 
 ```bash
-IMAGE=ghcr.io/dein-name/mathe-quidditch:latest
+IMAGE=ghcr.io/jensgiehl/mathe-quidditch:latest
 
 docker rm -f mathe-quidditch 2>/dev/null
 
